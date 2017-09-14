@@ -1,0 +1,54 @@
+@import './fonts/fonts.scss';
+
+body {
+  font-size: 16px;
+  background: url('/assets/img/bg.png') no-repeat scroll 0 0 transparent;
+  backgroung-size: cover;
+  height: 100vh;
+  color: white;
+}
+h2 {
+  font-size: 2rem;
+  letter-spacing: 5px;
+}
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.pokemonFont {
+  font-family: 'Pokemon Hollow';
+}
+
+.pokemonFontBold {
+  font-family: 'Pokemon Solid';
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.combats-wrapper {
+  width: 960px;
+  margin: 0 auto;
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.6);
+  color: black;
+  padding: 50px 30px;
+}
