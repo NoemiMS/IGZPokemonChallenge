@@ -51,6 +51,7 @@ def load_and_format_stats():
 
 def format_net_input(combats):
     stats = load_and_format_stats()
+    # stats = pd.read_csv('data/formated_stats.csv', index_col='#')
 
     # Total number of combats:
     total_combats = combats.count()[0]
