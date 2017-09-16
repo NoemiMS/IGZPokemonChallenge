@@ -56,7 +56,7 @@ def load_and_format_stats():
     stats = normalize_dataset(stats)
 
     # Write CSV with formated dataset
-    #stats.to_csv('data/formated_stats.csv')
+    stats.to_csv('data/formated_stats.csv')
 
     return stats
 
@@ -145,7 +145,7 @@ def create_model(input_dim):
     model.add(Dense(1, activation='sigmoid', name='prediction'))
 
     model.compile(loss='binary_crossentropy',
-                  optimizer='nadam',
+                  optimizer='adam',
                   metrics=['accuracy'])
 
     print(model.summary())
@@ -153,11 +153,11 @@ def create_model(input_dim):
 
 
 # CALLBACKS:
-early_stopper = EarlyStopping(monitor='val_loss', patience=100, verbose=0)
+early_stopper = EarlyStopping(monitor='loss', patience=100, verbose=0)
 checkpointer = ModelCheckpoint(filepath="solosisnet.h5",
                                verbose=1,
                                save_best_only=True,
-                               monitor='val_loss')
+                               monitor='loss')
 
 callbacks_list = [checkpointer, early_stopper]
 
@@ -193,25 +193,30 @@ if __name__ == '__main__':
     import_model = False
     if import_model:
         print('Loading model...')
-        solosisnet = load_model("solosisnet.h5")
+        solosisnet = load_model('solosisnet.h5')
+        print(solosisnet.summary())
     else:
         solosisnet = create_model(input_dim)
 
     print('Training Net...')
 
     # TRAIN MODEL V1
+    # solosisnet.fit(X, Y, epochs=1000, batch_size=input_batch_size,
+    #                validation_split=0.3, callbacks=callbacks_list,
+    #                verbose=1, shuffle=True)
+
     solosisnet.fit(X, Y, epochs=1000, batch_size=input_batch_size,
-                   validation_split=0.2, callbacks=callbacks_list,
+                   callbacks=callbacks_list, validation_data=(X_test, Y_test),
                    verbose=1, shuffle=True)
 
-    # TRAIN MODEL V2:
+    # TRAIN MODEL V2
     # epochs = 1000
     # for epoch in range(epochs):
     #     solosisnet.fit(X, Y, epochs=1, batch_size=input_batch_size,
     #                    callbacks=callbacks_list, verbose=0, shuffle=True)
     #     solosisnet.load_weights("solosisnet.h5")
 
-    # TRAIN MODEL V3:
+    # TRAIN MODEL V3
     # epochs = 1000
     # for epoch in range(epochs):
     #     solosisnet.fit(X, Y, epochs=1, callbacks=callbacks_list, verbose=1,
@@ -223,7 +228,7 @@ if __name__ == '__main__':
     score = solosisnet.evaluate(X_test, Y_test)
     print('\t test -- score:%f accuracy:%f' % (score[0], score[1]))
 
-    print('Saving model...')
-    solosisnet.save("solosisnet.h5")
+    #print('Saving model...')
+    #solosisnet.save("solosisnet.h5")
 
     print('pikaaaa')
