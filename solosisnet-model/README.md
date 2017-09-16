@@ -11,7 +11,7 @@ $ python3 solosisnet_training.py
 Make combat predictions for the final delivery.
 
 File with combats to predict: 'data/combats.csv'
-Output file:                  'predicted_combats.csv'
+Output file:                  'data/predicted_combats.csv'
 
 ```sh
 $ cd solosisnet-model
