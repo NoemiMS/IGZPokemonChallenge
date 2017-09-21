@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # Make a prediction...
     prediction = solosisnet.predict(net_input)
 
-    if prediction > 0.5:
+    if prediction < 0.5:
         # Send pokemon_A
         print('A')
     else:

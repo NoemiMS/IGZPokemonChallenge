@@ -51,8 +51,8 @@ def load_and_format_stats():
 
 
 def format_net_input(combats):
-    stats = load_and_format_stats()
-    # stats = pd.read_csv('data/formated_stats.csv', index_col='#')
+    # stats = load_and_format_stats()
+    stats = pd.read_csv('data/formated_stats.csv', index_col='#')
 
     # Total number of combats:
     total_combats = combats.count()[0]
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     winner_pokemons = []
     for prediction_index, prediction in enumerate(net_output):
         print (prediction)
-        if prediction > 0.5:
+        if prediction < 0.5:
             winner = combats['Pokemon_A'][combats.index == prediction_index].values[0]
         else:
             winner = combats['Pokemon_B'][combats.index == prediction_index].values[0]
