@@ -3,8 +3,9 @@ from keras.models import load_model
 
 # FILEPATHS
 filepath_stats = "data/pokemon.csv"
-filepath_combats = "data/combats.csv"
-filepath_prediction = "data/predicted_combats.csv"
+filepath_combats = "data/tests.csv"
+filepath_combats_test = "data/tests-test.csv"
+filepath_prediction = "data/predicted_combats_challenge.csv"
 
 
 def normalize_dataset(dataset):
@@ -80,11 +81,13 @@ if __name__ == '__main__':
 
     print('Make a prediction...')
     net_output = solosisnet.predict(net_input)
+    print(net_output)
 
     print('Format the predictions...')
     winner_pokemons = []
     for prediction_index, prediction in enumerate(net_output):
-        if prediction == [0]:
+        print (prediction)
+        if prediction > 0.5:
             winner = combats['Pokemon_A'][combats.index == prediction_index].values[0]
         else:
             winner = combats['Pokemon_B'][combats.index == prediction_index].values[0]
@@ -92,3 +95,6 @@ if __name__ == '__main__':
 
     print('Write the prediction in a new CSV...')
     pd.DataFrame(winner_pokemons).to_csv(filepath_prediction)
+    print('Write the prediction in a new column in tests CSV...')
+    combats['Winner'] = winner_pokemons
+    combats.to_csv(filepath_combats)
